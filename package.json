@@ -1,0 +1,14 @@
+{
+  "name": "vehicle-maintenance-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/mcp/server.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.17.5",
+    "better-sqlite3": "^11.10.0",
+    "zod": "^3.24.1"
+  }
+}
