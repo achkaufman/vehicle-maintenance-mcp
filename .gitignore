@@ -1,0 +1,14 @@
+# Planning docs
+.plans/
+
+# Database
+data/
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment
+.env
