@@ -1,7 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import { addVehicle } from "../db/index.js";
+import { addVehicle, listVehicles } from "../db/index.js";
 
 const server = new McpServer({
   name: "vehicle-maintenance-mcp",
@@ -37,6 +37,34 @@ server.tool(
         {
           type: "text",
           text: JSON.stringify({ ok: true, vehicle }, null, 2)
+        }
+      ]
+    };
+  }
+);
+
+server.tool(
+  "list_vehicles",
+  `
+  Returns all vehicles currently stored in the local vehicle inventory database.
+
+  Use this when:
+  - the user asks to view their vehicles
+  - the user asks what vehicles are already tracked
+  - you need vehicle IDs before another tool call
+
+  Do not use this when:
+  - adding a new vehicle
+  - updating existing vehicle details
+  `,
+  async () => {
+    const vehicles = listVehicles();
+
+    return {
+      content: [
+        {
+          type: "text",
+          text: JSON.stringify({ ok: true, count: vehicles.length, vehicles }, null, 2)
         }
       ]
     };

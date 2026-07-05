@@ -23,6 +23,12 @@ const insertVehicleStatement = db.prepare(
    VALUES (@id, @name, @make, @model, @year, @vin)`
 );
 
+const listVehiclesStatement = db.prepare(
+  `SELECT id, name, make, model, year, vin
+   FROM vehicles
+   ORDER BY year DESC, make ASC, model ASC, name ASC`
+);
+
 export function addVehicle({ name, make, model, year, vin }) {
   const vehicle = {
     id: crypto.randomUUID(),
@@ -35,4 +41,8 @@ export function addVehicle({ name, make, model, year, vin }) {
 
   insertVehicleStatement.run(vehicle);
   return vehicle;
+}
+
+export function listVehicles() {
+  return listVehiclesStatement.all();
 }
